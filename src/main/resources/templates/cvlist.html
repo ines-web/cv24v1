@@ -1,33 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Liste des CV</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Liste des CV</title>
+<link href="/resources/css/styleTableau.css" rel="stylesheet">
 </head>
 <body>
     <h1>Liste des CV</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Identité</th>
-                <th>Objectif</th>
-                <th>Profession</th>
-                <th>Compétences</th>
-                <th>Divers</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cv : ${cvs}">
-                <td th:text="${cv.id}">ID</td>
-                <td th:text="${cv.identite.nom} + ' ' + ${cv.identite.prenom}">Identité</td>
-                <td th:text="${cv.getObjectif().getStatus()}">Objectif status</td>
-                <td th:text="${cv.getObjectif().}">Objectif</td>
-                
-          
-            </tr>
-        </tbody>
-    </table>
+    <div th:each="cv : ${cvs}" class="cv">
+        <div class="cv-section">
+            <h2>Identité</h2>
+            <p><strong>Nom :</strong> <span th:text="${cv.identite.nom}">Nom</span></p>
+            <p><strong>Prénom :</strong> <span th:text="${cv.identite.prenom}">Prénom</span></p>
+            <p><strong>Téléphone :</strong> <span th:text="${cv.identite.tel}">Téléphone</span></p>
+            <p><strong>Email :</strong> <span th:text="${cv.identite.mel}">Email</span></p>
+        </div>
+        
+        <div class="cv-section">
+            <h2>Objectif</h2>
+            <p><strong>Statut :</strong> <span th:text="${cv.objectif.status}">Statut</span></p>
+            <p><strong>Description :</strong> <span th:text="${cv.objectif.objectif}">Description</span></p>
+        </div>
+        
+        <div class="cv-section">
+            <h2>Profession</h2>
+            <div th:each="detail : ${cv.prof.details}">
+                <p><strong>Date de début :</strong> <span th:text="${detail.datedeb}">Date de début</span></p>
+                <p><strong>Date de fin :</strong> <span th:text="${detail.datefin}">Date de fin</span></p>
+                <p><strong>Titre :</strong> <span th:text="${detail.titre}">Titre</span></p>
+            </div>
+        </div>
+        
+        <div class="cv-section">
+            <h2>Compétences</h2>
+            <div th:each="diplome : ${cv.getCompetence().getDiplomes()}">
+                <p><strong>Niveau :</strong> <span th:text="${diplome.niveau}">Niveau</span></p>
+                <p><strong>Date :</strong> <span th:text="${diplome.date}">Date</span></p>
+                <p><strong>Institut :</strong> <span th:text="${diplome.institut}">Institut</span></p>
+                <p><strong>Titre :</strong> <span th:text="${diplome.titre}">Titre</span></p>
+            </div>
+            <div th:each="certif : ${cv.getCompetence().getCertifications()}">
+                <p><strong>Date de début :</strong> <span th:text="${certif.datedeb}">Date de début</span></p>
+                <p><strong>Date de fin :</strong> <span th:text="${certif.datefin}">Date de fin</span></p>
+                <p><strong>Titre :</strong> <span th:text="${certif.titre}">Titre</span></p>
+            </div>
+        </div>
+        
+              
+        <hr>
+    </div>
 </body>
 </html>

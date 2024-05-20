@@ -51,6 +51,14 @@ public class Objectif implements Serializable {
     public String getStatus() {
         return status;
     }
+    
+    public String getObjectif() {
+        return objectif;
+    }
+    
+    public void setObjectif(String objectif) {
+        this.objectif=objectif;
+    }
 
     public void setStatus(String status) {
         this.status = status;
