@@ -35,6 +35,7 @@ public class xmlConvert {
         StringWriter writer = new StringWriter();
         marshaller.marshal(cv, writer);
         String  xml = writer.toString().replaceAll("ns2", "cv24");
+        xml = xml.toString().replaceAll("<cv24:cv24 xmlns:cv24=\"http://univ.fr/cv24\">", "<cv24:cv24 xmlns:cv24=\"http://univ.fr/cv24\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://univ.fr/cv24 cv24.tp1.xsd\">");
         return xml;
     }
     

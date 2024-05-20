@@ -47,10 +47,10 @@ public class PostController {
         }
 
 		
-             cv24Service.saveCV(cv);
+             String m=cv24Service.saveCV(cv);
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_XML)
-                    .body("INSERTED");
+                    .body(m);
        
     }
 
