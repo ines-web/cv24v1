@@ -1,74 +1,105 @@
+/* Accueil Styles */
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 body {
   font-family: 'Nunito', sans-serif;
-  color: #384047;
-}
-.logo{
-	border: 1px solid #ddd;
- 	border-radius: 4px;
-  	padding: 5px;
-  	width: 300px;
+  color: #333;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
 }
 
-.intro{
-  max-width: 960px;
-  margin: 10px auto;
-  align:center;
+/* Header Styles */
+.header {
+  background-color: #4a90e2;
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 4px solid #333;
+  height: 230px;
 }
 
-.intro h1,.intro span{
-    color:#8a97a0;
-}
-
-.intro h2{
-	color:#FF0000;
-}
-
-table {
-  max-width: 960px;
-  margin: 10px auto;
-}
-
-caption {
-  font-size: 1.6em;
-  font-weight: 400;
-  padding: 10px 0;
-}
-
-thead th {
-  font-weight: 400;
-  background: #8a97a0;
-  color: #FFF;
-}
-
-tr {
-  background: #f4f7f8;
-  border-bottom: 1px solid #FFF;
+.logo {
+  border-radius: 20% 25% 30% 10%;
+  width: 300px;
+  height: 100px;
   margin-bottom: 5px;
 }
 
-tr:nth-child(even) {
-  background: #e8eeef;
+.header h1 {
+  margin: 5px 0;
+  font-size: 1.5em;
 }
 
-th, td {
-  text-align: left;
-  padding: 20px;
+.subtitle {
+  font-size: 0.9em;
   font-weight: 300;
 }
 
-tfoot tr {
-  background: none;
+/* Main Content Styles */
+.main-content {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-tfoot td {
-  padding: 10px 2px;
-  font-size: 0.8em;
-  font-style: italic;
-  color: #8a97a0;
+.authors h2 {
+  color: #4a90e2;
+  margin-bottom: 20px;
+}
+
+.authors p {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.more-info p {
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+.more-info a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.more-info a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 4px solid #4a90e2;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 2em;
+  }
+
+  .main-content {
+    width: 90%;
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .more-info p {
+    font-size: 1em;
+  }
 }
