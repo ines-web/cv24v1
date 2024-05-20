@@ -39,6 +39,11 @@ public class GetController {
 	public String help() {
 		return "help";
 	}
+	
+	@RequestMapping("/*")
+	public String notFound() {
+		return "notFound";
+	}
 
 
     @GetMapping("/test")
