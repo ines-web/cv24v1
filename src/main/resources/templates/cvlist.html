@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des CV</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Liste des CV</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Identité</th>
+                <th>Objectif</th>
+                <th>Profession</th>
+                <th>Compétences</th>
+                <th>Divers</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cv : ${cvs}">
+                <td th:text="${cv.id}">ID</td>
+                <td th:text="${cv.identite.nom} + ' ' + ${cv.identite.prenom}">Identité</td>
+                <td th:text="${cv.getObjectif().getStatus()}">Objectif</td>
+          
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
