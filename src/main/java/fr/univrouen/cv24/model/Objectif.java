@@ -23,6 +23,10 @@ public class Objectif implements Serializable {
     @XmlTransient
     private Long id;
 
+    @Column(name = "objectif", length = 128)
+    @XmlElement(name="objectif")
+    private String objectif;
+    
     @XmlAttribute(name = "status")
     private String status;
 

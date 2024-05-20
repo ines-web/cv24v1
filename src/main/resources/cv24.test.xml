@@ -7,7 +7,10 @@
     <tel>+33 1 23 45 67 89</tel>
     <mel>mel@hs.fr</mel>
   </cv24:identite>
-  <cv24:objectif status="stage"/>
+  <cv24:objectif status="stage">
+  <objectif>test
+  </objectif>
+  </cv24:objectif>
   <cv24:prof>
     <detail>
       <datedeb>2001-01-01</datedeb>

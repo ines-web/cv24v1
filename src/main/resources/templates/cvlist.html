@@ -22,7 +22,9 @@
             <tr th:each="cv : ${cvs}">
                 <td th:text="${cv.id}">ID</td>
                 <td th:text="${cv.identite.nom} + ' ' + ${cv.identite.prenom}">Identité</td>
-                <td th:text="${cv.getObjectif().getStatus()}">Objectif</td>
+                <td th:text="${cv.getObjectif().getStatus()}">Objectif status</td>
+                <td th:text="${cv.getObjectif().}">Objectif</td>
+                
           
             </tr>
         </tbody>

@@ -82,6 +82,9 @@
 </xs:complexType>
 
 <xs:complexType name="objectifType">
+        <xs:sequence>
+            <xs:element name="objectif" type="String128" minOccurs="1" maxOccurs="1"></xs:element>
+        </xs:sequence>
 	  <xs:attribute name="status"  use="required">
     <xs:simpleType>
       <xs:restriction base="xs:string">
