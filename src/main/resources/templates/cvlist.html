@@ -32,18 +32,44 @@
             </div>
             <div class="button-section">
                 <!-- Lien pour les détails -->
-                <button><a th:href="@{/cv24/html(id=${cv.getId()})}" class="redirection-button" style="text-decoration: none; color: inherit;">Détails</a></button> 
-                <button onclick="deleteCv(5)">Supprimer</button>
+                <button onclick="getDetails(this)"  class="redirection-button">Détails</button>
+                <button onclick="deleteCv(this)"  class="redirection-button">Supprimer</button>
+  
             </div>
             <hr>
         </div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        function deleteCv(cvId) {
+
+        function getDetails(button) {
+            let cvCardDiv = button.closest('.cv-card'); // Sélectionnez le bloc cv-card correspondant
+            let idValue = cvCardDiv.querySelector('.id-value').textContent; // Récupérez la valeur ID correspondante
+            console.log("hhhhh", idValue);
+            window.location.href = '/cv24/html?id=' + idValue;
+        }
+       function deleteCv(button) {
+            let cvCardDiv = button.closest('.cv-card'); // Sélectionnez le bloc cv-card correspondant
+            let idValue = cvCardDiv.querySelector('.id-value').textContent; // Récupérez la valeur ID correspondante
+            console.log("hhhhh", idValue);
             if (confirm('Êtes-vous sûr de vouloir supprimer ce CV?')) {
-                // Remplacer par une requête AJAX ou une autre méthode de suppression
-                window.location.href = '/cv24/delete?id=' + cvId;
+                $.ajax({
+                    url: '/cv24/delete?id=' + idValue,
+                    type: 'DELETE',
+                    dataType: "xml", // Ajouté pour recevoir une réponse XML
+                    success: function(response) {
+                        let status = $(response).find('status').text();
+                        if(status == 'DELETED') {
+                            window.location.href = '/cv24/resume';
+                        } else {
+                            alert('Une erreur s\'est produite lors de la suppression du CV');
+                        } 
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Une erreur s\'est produite lors de la suppression du CV: ' + textStatus + ' ' + errorThrown);
+                    }
+                });
             }
         }
     </script>
