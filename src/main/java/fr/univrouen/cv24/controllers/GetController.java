@@ -30,10 +30,11 @@ public class GetController {
 
 	  @Autowired
 	    private Cv24Service cv24Service;
-
+	//recuperer la liste des cv en HTML
 	    @GetMapping("/cv24/resume")
 	    public String listCVs(Model model) {
-	        List<CV24> cvs = cv24Service.findAll();
+	       
+	        List<Cv24Resume> cvs = cv24Service.getAllCVResumes();
 	        model.addAttribute("cvs", cvs);
 	        return "cvlist";
 	    }
@@ -75,7 +76,7 @@ public class GetController {
 	public String notFound() {
 		return "notFound";
 	}
-
+//recuperer la liste des cv en xml
 	@GetMapping(value = "/cv24/resume/xml", produces = MediaType.APPLICATION_XML_VALUE)
 	 @ResponseBody
     public Cv24ResumeList getAllCVResumes() {

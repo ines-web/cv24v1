@@ -27,7 +27,7 @@ public class Cv24Resume implements Serializable {
     private String prenom;
 
     @XmlElement(name = "objectif", required = true)
-    private String objectif;
+    private Objectif objectif;
 
     @XmlElement(name = "diplôme", required = true)
     private Diplome diplome;
@@ -62,12 +62,12 @@ public class Cv24Resume implements Serializable {
     }
 
     
-    public String getObjectif() {
+    public Objectif getObjectif() {
         return objectif;
     }
 
    
-    public void setObjectif(String objectif) {
+    public void setObjectif(Objectif objectif) {
         this.objectif = objectif;
     }
 

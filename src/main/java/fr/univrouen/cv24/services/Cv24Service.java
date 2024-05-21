@@ -132,8 +132,8 @@ public class Cv24Service {
 	            resume.setGenre(cv.getIdentite().getGenre());
 	            resume.setNom(cv.getIdentite().getNom());
 	            resume.setPrenom(cv.getIdentite().getPrenom());
-	            resume.setObjectif(cv.getObjectif().getStatus() + " " + cv.getObjectif().getObjectif());
-	            resume.setDiplome(cv.getCompetence().getDiplomes().stream().findFirst().orElse(null)); // Assuming the highest/recent diploma is the first
+	            resume.setObjectif(cv.getObjectif());
+	            resume.setDiplome(cv.getCompetence().getDiplomes().stream().findFirst().orElse(null)); //recuperer le diplome le plus elever
 	            return resume;
 	        }).collect(Collectors.toList());
 	    }
