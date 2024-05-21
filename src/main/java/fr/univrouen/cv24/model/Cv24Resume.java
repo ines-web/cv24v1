@@ -14,31 +14,23 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Cv24Resume implements Serializable {
 
-   
     @XmlElement(name = "id", required = true)
-    private int id;
+    private Long id;
 
-    
     @XmlElement(name = "genre", required = true)
     private String genre;
 
     @XmlElement(name = "nom", required = true)
     private String nom;
 
-   
     @XmlElement(name = "prenom", required = true)
     private String prenom;
 
-    /**
-     * L'objectif professionnel du cv.
-     */
     @XmlElement(name = "objectif", required = true)
     private String objectif;
 
-  
     @XmlElement(name = "diplôme", required = true)
     private Diplome diplome;
-
     
     public String getGenre() {
         return genre;
@@ -90,12 +82,12 @@ public class Cv24Resume implements Serializable {
     }
 
    
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
    
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long long1) {
+        this.id = long1;
     }
 }

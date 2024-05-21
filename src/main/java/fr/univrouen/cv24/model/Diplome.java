@@ -1,6 +1,8 @@
 package fr.univrouen.cv24.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
 
@@ -28,23 +30,16 @@ public class Diplome implements Serializable {
     @XmlElement
     private String institut;
 
-    @Column(name = "titre", nullable = false, length = 32)
-    @XmlElement(required = true)
-    private String titre;
+    @OneToMany(mappedBy = "diplome", cascade = CascadeType.ALL, orphanRemoval = true)
+    @XmlElement(name = "titre", required = true)
+    private List<Titre> titre;
 
     @ManyToOne
     @JoinColumn(name = "competence_id", nullable = false)
     @XmlTransient
     private Competences competences;
 
-    public Diplome(int niveau, String date, String institut, String titre, Competences competences) {
-        this.niveau = niveau;
-        this.date = date;
-        this.institut = institut;
-        this.titre = titre;
-        this.competences = competences;
-    }
-
+ 
     public Diplome() {}
 
     public Long getId() {
@@ -75,11 +70,11 @@ public class Diplome implements Serializable {
         this.institut = institut;
     }
 
-    public String getTitre() {
+    public  List<Titre> getTitre() {
         return titre;
     }
 
-    public void setTitre(String titre) {
+    public void setTitre(List<Titre> titre) {
         this.titre = titre;
     }
 

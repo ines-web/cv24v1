@@ -1,6 +1,7 @@
 package fr.univrouen.cv24.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,13 @@ import fr.univrouen.cv24.model.Autre;
 import fr.univrouen.cv24.model.CV24;
 import fr.univrouen.cv24.model.Certif;
 import fr.univrouen.cv24.model.Competences;
+import fr.univrouen.cv24.model.Cv24Resume;
 import fr.univrouen.cv24.model.Detail;
 import fr.univrouen.cv24.model.Diplome;
 import fr.univrouen.cv24.model.Divers;
 import fr.univrouen.cv24.model.LV;
 import fr.univrouen.cv24.model.Prof;
+import fr.univrouen.cv24.model.Titre;
 import fr.univrouen.cv24.repository.CV24Repository;
 
 @Service
@@ -63,6 +66,13 @@ public class Cv24Service {
 	            Competences competences = cv.getCompetence();
 	            if (competences != null) {
 	                for (Diplome diplome : competences.getDiplomes()) {
+	                	
+	                	  if (diplome != null) {
+	                          for (Titre titre : diplome.getTitre()) {
+	                              titre.setDiplome(diplome);
+	                           }
+	                      }
+	                	
 	                    diplome.setCompetence(competences);
 	                }
 	                for (Certif certif : competences.getCertifications()) {
@@ -112,4 +122,21 @@ public class Cv24Service {
 	    public CV24 getCVById(int id) {
 	        return cv24Repository.findById(id);
 	    }
+	    
+	    
+	    public List<Cv24Resume> getAllCVResumes() {
+	        List<CV24> cvs = cv24Repository.findAll();
+	        return cvs.stream().map(cv -> {
+	            Cv24Resume resume = new Cv24Resume();
+	            resume.setId(cv.getId());
+	            resume.setGenre(cv.getIdentite().getGenre());
+	            resume.setNom(cv.getIdentite().getNom());
+	            resume.setPrenom(cv.getIdentite().getPrenom());
+	            resume.setObjectif(cv.getObjectif().getStatus() + " " + cv.getObjectif().getObjectif());
+	            resume.setDiplome(cv.getCompetence().getDiplomes().stream().findFirst().orElse(null)); // Assuming the highest/recent diploma is the first
+	            return resume;
+	        }).collect(Collectors.toList());
+	    }
+	    
+	    
 	}

@@ -37,7 +37,7 @@
                 <p><strong>Niveau :</strong> <span th:text="${diplome.niveau}">Niveau</span></p>
                 <p><strong>Date :</strong> <span th:text="${diplome.date}">Date</span></p>
                 <p><strong>Institut :</strong> <span th:text="${diplome.institut}">Institut</span></p>
-                <p><strong>Titre :</strong> <span th:text="${diplome.titre}">Titre</span></p>
+                <p><strong>Titre :</strong> <span th:each="titre :${diplome.getTitre()}"> <span th:text="${titre.getTitre()}"></span> </span></p>
             </div>
             <div th:each="certif : ${cv.getCompetence().getCertifications()}">
                 <p><strong>Date de début :</strong> <span th:text="${certif.datedeb}">Date de début</span></p>

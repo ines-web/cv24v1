@@ -13,10 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.univrouen.cv24.exception.ErrorResponse;
 import fr.univrouen.cv24.model.CV24;
+import fr.univrouen.cv24.model.Cv24Resume;
+import fr.univrouen.cv24.model.Cv24ResumeList;
 import fr.univrouen.cv24.services.Cv24Service;
 import fr.univrouen.cv24.util.Fichier;
 import fr.univrouen.cv24.xmlValidation.xmlConvert;
@@ -55,6 +58,14 @@ public class GetController {
         }
     }
     
+    
+    @GetMapping("/cv24/html")
+    public String getCVCompletHTMLByID(@RequestParam("id") int cvId, Model model){
+        CV24 cv = cv24Service.getCVById(cvId);
+        model.addAttribute("cv24", cv);
+        return "cv24";
+    }
+    
 	@RequestMapping("/help")
 	public String help() {
 		return "help";
@@ -65,7 +76,12 @@ public class GetController {
 		return "notFound";
 	}
 
-
+	@GetMapping(value = "/cv24/resume/xml", produces = MediaType.APPLICATION_XML_VALUE)
+	 @ResponseBody
+    public Cv24ResumeList getAllCVResumes() {
+        List<Cv24Resume> resumes = cv24Service.getAllCVResumes();
+        return new Cv24ResumeList(resumes);
+    }
 
     @Autowired
     private Fichier fichier;
