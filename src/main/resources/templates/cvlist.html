@@ -3,43 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Liste des CV</title>
-<link href="/resources/css/styleTableau.css" rel="stylesheet">
+    <link href="/resources/css/styleCvListe.css" rel="stylesheet">
 </head>
 <body>
     <h1>Liste des CV</h1>
-    <div th:each="cv : ${cvs}" class="cv">
-         <div class="cv-section">
-            <h2 >ID :<span th:text="${cv.getId()}">ID</span></h2>
-           
-        
-        </div>
-        <div class="cv-section">
-            <h2>Identité</h2>
-            <p><strong>Genre :</strong> <span th:text="${cv.getGenre()}">Genre</span></p>
-            <p><strong>Nom :</strong> <span th:text="${cv.getNom()}">Nom</span></p>
-            <p><strong>Prénom :</strong> <span th:text="${cv.getPrenom()}">Prénom</span></p>
-       
-        </div>
-        
-        <div class="cv-section">
-            <h2>Objectif</h2>
-            <p><strong>Demande de </strong> <span th:text="${cv.getObjectif().getStatus()}">Statut</span> <strong>:</strong> <span th:text="${cv.getObjectif().getObjectif()}">Description</span></p>
-        
-        </div>
-        
-      
-        <div class="cv-section">
-            <h2>Diplome</h2>
-          
+    <div class="cv-container">
+        <div th:each="cv : ${cvs}" class="cv-card">
+            <div class="cv-section id-section">
+                <h2>ID :</h2>
+                <span class="id-value" th:text="${cv.getId()}">ID</span>
+            </div>
+            <div class="cv-section">
+                <h2>Identité</h2>
+                <p><strong>Genre :</strong> <span th:text="${cv.getGenre()}">Genre</span></p>
+                <p><strong>Nom :</strong> <span th:text="${cv.getNom()}">Nom</span></p>
+                <p><strong>Prénom :</strong> <span th:text="${cv.getPrenom()}">Prénom</span></p>
+            </div>
+            <div class="cv-section">
+                <h2>Objectif</h2>
+                <p><strong>Demande de </strong> <span th:text="${cv.getObjectif().getStatus()}">Statut</span> <strong>:</strong> <span th:text="${cv.getObjectif().getObjectif()}">Description</span></p>
+            </div>
+            <div class="cv-section">
+                <h2>Diplôme</h2>
                 <p><strong>Niveau :</strong> <span th:text="${cv.getDiplome().niveau}">Niveau</span></p>
-                <p><stronsg>Date :</strong> <span th:text="${cv.getDiplome().date}">Date</span></p>
+                <p><strong>Date :</strong> <span th:text="${cv.getDiplome().date}">Date</span></p>
                 <p><strong>Institut :</strong> <span th:text="${cv.getDiplome().institut}">Institut</span></p>
                 <p><strong>Titre :</strong> <span th:each="titre :${cv.getDiplome().getTitre()}"> <span th:text="${titre.getTitre()}">Titre :</span> </span></p>
-            
-             </div>
-        
-              
-        <hr>
+            </div>
+            <div class="button-section">
+                <!-- Lien pour les détails -->
+                <button><a th:href="@{/cv24/html(id=${cv.getId()})}" class="redirection-button" style="text-decoration: none; color: inherit;">Détails</a></button> 
+                <button onclick="deleteCv(5)">Supprimer</button>
+            </div>
+            <hr>
+        </div>
     </div>
+
+    <script>
+        function deleteCv(cvId) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce CV?')) {
+                // Remplacer par une requête AJAX ou une autre méthode de suppression
+                window.location.href = '/cv24/delete?id=' + cvId;
+            }
+        }
+    </script>
 </body>
 </html>

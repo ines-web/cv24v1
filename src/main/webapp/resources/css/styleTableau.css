@@ -1,116 +1,106 @@
 /* Help Styles */
 *, *:before, *:after {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Nunito', sans-serif;
-    color: #333;
-    background-color: #f5f7fa;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Logo Styles */
-  .logo {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px;
-    width: 300px;
-    display: block;
-    margin: 20px auto;
-  }
-  
-  /* Intro Styles */
-  .intro {
-    max-width: 960px;
-    margin: 20px auto;
-    text-align: center;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  .intro h1, .intro span {
-    color: #4a90e2;
-  }
-  
-  .intro p {
-    color: #555;
-    font-size: 1.1em;
-  }
-  
-  /* Table Styles */
-  table {
-    width: 100%;
-    max-width: 960px;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  thead th {
-    background-color: #4a90e2;
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 15px;
-  }
-  
-  tbody tr {
-    background-color: #f4f7f8;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tbody tr:nth-child(even) {
-    background-color: #e8eeef;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 20px;
-    font-weight: 400;
-    color: #333;
-  }
-  
-  tfoot tr {
-    background-color: #fff;
-  }
-  
-  tfoot td {
-    padding: 10px;
-    font-size: 0.9em;
-    color: #777;
-    text-align: center;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 600px) {
-    .intro, table {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: #333;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Intro Styles */
+.intro {
+  max-width: 960px;
+  margin: 20px auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.intro h1, .intro span {
+  color: #4a90e2;
+}
+
+.intro p {
+  color: #555;
+  font-size: 1.1em;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  max-width: 960px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead th {
+  background-color: #4a90e2;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 15px;
+}
+
+tbody tr {
+  background-color: #f4f7f8;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #e8eeef;
+}
+
+th, td {
+  text-align: left;
+  padding: 20px;
+  font-weight: 400;
+  color: #333;
+}
+
+tfoot tr {
+  background-color: #fff;
+}
+
+tfoot td {
+  padding: 10px;
+  font-size: 0.9em;
+  color: #777;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .intro, table {
       width: 90%;
-    }
-  
-    thead, tfoot {
+  }
+
+  thead, tfoot {
       display: none;
-    }
-  
-    tbody tr {
+  }
+
+  tbody tr {
       display: block;
       margin-bottom: 10px;
-    }
-  
-    tbody tr td {
+  }
+
+  tbody tr td, tbody tr th {
       display: block;
       text-align: right;
       padding-left: 50%;
       position: relative;
-    }
-  
-    tbody tr td::before {
+  }
+
+  tbody tr td::before, tbody tr th::before {
       content: attr(data-label);
       position: absolute;
       left: 0;
@@ -118,6 +108,12 @@
       padding-left: 20px;
       font-weight: 600;
       text-align: left;
-    }
   }
-  
+
+  tbody tr th {
+      text-align: left;
+      background-color: #4a90e2;
+      color: white;
+      padding: 10px;
+  }
+}
