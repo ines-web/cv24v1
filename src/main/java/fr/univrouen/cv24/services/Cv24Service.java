@@ -137,6 +137,14 @@ public class Cv24Service {
 	            return resume;
 	        }).collect(Collectors.toList());
 	    }
-	    
-	    
+	    @Transactional
+	    public boolean deleteCVById(int id) {
+	        CV24 cv = cv24Repository.findById(id);
+	        if (cv!= null) {
+	            cv24Repository.deleteById(id);
+	            return true;
+	        } else {
+	            return false;
+	        }    
 	}
+}

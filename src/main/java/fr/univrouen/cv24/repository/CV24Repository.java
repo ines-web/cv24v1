@@ -13,5 +13,7 @@ public interface CV24Repository extends JpaRepository<CV24, Long> {
 
 	CV24 findById(int id);
 
+	void deleteById(int id);
+
     
 }
