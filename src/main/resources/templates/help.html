@@ -29,7 +29,7 @@
     <tr>
         <th scope="row">/</th>
         <td data-label="Méthode HTTP">GET</td>
-        <td data-label="Description">Retourne la page d'accueil avec un message identifiant le projet</td>
+        <td data-label="Description">Retourne la page d'accueil avec un message identifiant le projet  </td>
     </tr>
     <tr>
         <th scope="row">/help</th>
@@ -39,33 +39,86 @@
     <tr>
         <th scope="row">/cv24/resume/xml</th>
         <td data-label="Méthode HTTP">GET</td>
-        <td data-label="Description">Retourne la liste des CV stockés au format XML</td>
+        <td data-label="Description">
+            Cette requête récupère et affiche la liste des CV stockés dans la base de données. Le format de retour est un flux XML qui contient une liste synthétisée des informations présentes dans la base de données pour chaque CV. Les informations affichées pour chaque CV incluent :
+            <ul>
+                <li><strong>Id:</strong> Valeur numérique auto-incrémentée lors de l'enregistrement d'un nouveau CV valide</li>
+                <li><strong>Identité:</strong> Genre, Prénom, Nom</li>
+                <li><strong>Objectif:</strong> Objectif professionnel avec le statut spécifié en début de ligne</li>
+                <li><strong>Diplôme:</strong> Le diplôme le plus élevé (ou le plus récent)</li>
+            </ul>
+        </td>
     </tr>
+    
     <tr>
         <th scope="row">/cv24/resume</th>
         <td data-label="Méthode HTTP">GET</td>
-        <td data-label="Description">Retourne la liste des CV stockés au format HTML</td>
+        <td data-label="Description">
+            Cette requête récupère et affiche la liste des CV stockés dans la base de données. Le format de retour est une page HTML (ou XHTML) qui contient une liste synthétisée des informations présentes dans la base de données pour chaque CV. Les informations affichées pour chaque CV incluent :
+            <ul>
+                <li><strong>Id:</strong> Valeur numérique auto-incrémentée lors de l'enregistrement d'un nouveau CV valide</li>
+                <li><strong>Identité:</strong> Genre, Prénom, Nom</li>
+                <li><strong>Objectif:</strong> Objectif professionnel avec le statut spécifié en début de ligne</li>
+                <li><strong>Diplôme:</strong> Le diplôme le plus élevé (ou le plus récent)</li>
+            </ul>
+            Une mise en page est réalisée pour obtenir un affichage agréable.
+        </td>
+    </tr>
+    
+    <tr>
+        <th scope="row">/cv24/xml?id=&lt;id&gt;</th>
+        <td data-label="Méthode HTTP">GET</td>
+        <td data-label="Description">
+            Cette requête affiche le contenu complet du CV dont l’identifiant est transmis en paramètre. Le format de retour est un flux XML conforme au schéma xsd cv24, comprenant un seul CV. L’intégralité de la spécification dont l’identifiant est fourni sera retournée. Si l’identifiant est incorrect, un message d’erreur au format XML sera retourné contenant :
+            <ul>
+                <li><strong>id:</strong> Numéro de l’identifiant demandé</li>
+                <li><strong>status:</strong> ERROR</li>
+            </ul>
+        </td>
     </tr>
     <tr>
-        <th scope="row">/cv24/xml?id={id}</th>
+        <th scope="row">/cv24/html?id=&lt;id&gt;</th>
         <td data-label="Méthode HTTP">GET</td>
-        <td data-label="Description">Retourne le contenu complet du CV dont l’identifiant est spécifié au format XML</td>
-    </tr>
-    <tr>
-        <th scope="row">/cv24/html?id={id}</th>
-        <td data-label="Méthode HTTP">GET</td>
-        <td data-label="Description">Retourne le contenu complet du CV dont l’identifiant est spécifié au format HTML</td>
+        <td data-label="Description">
+            Cette requête affiche le contenu complet du CV dont l’identifiant est fourni. Le format de retour est une page HTML (ou XHTML) contenant l’intégralité du CV dont l’identifiant est fourni par &lt;id&gt;. Si l’identifiant est incorrect, un message d’erreur au format HTML sera retourné contenant :
+            <ul>
+                <li><strong>id:</strong> Numéro de l’identifiant demandé</li>
+                <li><strong>status:</strong> ERROR</li>
+            </ul>
+        </td>
     </tr>
     <tr>
         <th scope="row">/cv24/insert</th>
         <td data-label="Méthode HTTP">POST</td>
-        <td data-label="Description">Ajoute un nouveau CV à la base de données</td>
+        <td data-label="Description">
+            Cette requête ajoute un nouveau CV dans la base. Un flux XML respectant la spécification cv24, conforme au schéma xsd, doit être transmis. Le flux reçu est validé par le schéma XSD de définition cv24. Si le flux est déjà présent (informations genre, nom, prénom et tel identiques), une indication d’erreur est retournée. Si l’opération est réussie, le CV est ajouté à la base et sa persistance est assurée. La valeur de &lt;id&gt; est générée automatiquement par incrémentation de la dernière valeur enregistrée et doit être unique. Le flux XML retourné contient les informations suivantes :
+            <ul>
+                <li><strong>id:</strong> Numéro d’identifiant attribué à la spécification soumise</li>
+                <li><strong>status:</strong> INSERTED</li>
+            </ul>
+            En cas d’échec de l’opération, les informations de statut seront retournées :
+            <ul>
+                <li><strong>status:</strong> ERROR</li>
+                <li><strong>detail:</strong> INVALID ou DUPLICATED selon l'origine de l'erreur</li>
+            </ul>
+        </td>
     </tr>
     <tr>
         <th scope="row">/cv24/delete</th>
         <td data-label="Méthode HTTP">DELETE</td>
-        <td data-label="Description">Supprime un CV de la base de données</td>
+        <td data-label="Description">
+            Cette requête supprime le CV dont l’identifiant est &lt;id&gt;. Le format de retour est un flux XML. Si l’opération réussit, les informations suivantes sont retournées :
+            <ul>
+                <li><strong>id:</strong> Numéro d’identifiant du CV qui a été supprimé</li>
+                <li><strong>status:</strong> DELETED</li>
+            </ul>
+            Si l’opération échoue :
+            <ul>
+                <li><strong>status:</strong> ERROR</li>
+            </ul>
+        </td>
     </tr>
+    
     </tbody>
 </table>
 </body>

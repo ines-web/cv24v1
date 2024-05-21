@@ -2,7 +2,7 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des CV</title>
+    <title>Liste des résumés des CVs</title>
     <link href="/resources/css/styleCvListe.css" rel="stylesheet">
 </head>
 <body>
@@ -46,13 +46,11 @@
         function getDetails(button) {
             let cvCardDiv = button.closest('.cv-card'); // Sélectionnez le bloc cv-card correspondant
             let idValue = cvCardDiv.querySelector('.id-value').textContent; // Récupérez la valeur ID correspondante
-            console.log("hhhhh", idValue);
             window.location.href = '/cv24/html?id=' + idValue;
         }
        function deleteCv(button) {
             let cvCardDiv = button.closest('.cv-card'); // Sélectionnez le bloc cv-card correspondant
             let idValue = cvCardDiv.querySelector('.id-value').textContent; // Récupérez la valeur ID correspondante
-            console.log("hhhhh", idValue);
             if (confirm('Êtes-vous sûr de vouloir supprimer ce CV?')) {
                 $.ajax({
                     url: '/cv24/delete?id=' + idValue,
