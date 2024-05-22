@@ -25,6 +25,7 @@ import fr.univrouen.cv24.services.Cv24Service;
 import fr.univrouen.cv24.util.Fichier;
 import fr.univrouen.cv24.xmlValidation.xmlConvert;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.xml.bind.JAXBException;
 
 @Controller
 public class GetController {
@@ -42,24 +43,14 @@ public class GetController {
 	    }
  
     
-    @GetMapping(value = "/cv24/xml", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<?> getCVById(@RequestParam("id") int id) {
-        try {
-            CV24 optionalCV = cv24Service.getCVById(id);
-      
-            if (optionalCV != null) {
-                xmlConvert convert = new xmlConvert(); 
-                String xml =convert.convertCVtoXML(optionalCV);
-                return new ResponseEntity<>(xml, HttpStatus.OK);
-            } else {
-                ErrorResponse errorResponse = new ErrorResponse(id, "ERROR");
-                return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            ErrorResponse errorResponse = new ErrorResponse(id, "ERROR");
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	    @GetMapping(value = "/cv24/xml", produces = MediaType.APPLICATION_XML_VALUE)
+	    public ResponseEntity<String> getCVById(@RequestParam("id") int id) throws JAXBException {
+	        CV24 cv = cv24Service.getCVById(id); // Cette méthode lance une exception si le CV n'est pas trouvé
+	        xmlConvert convert = new xmlConvert();
+	        String xml = convert.convertCVtoXML(cv);
+	        return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(xml);
+	    }
+
     
     
     @GetMapping("/cv24/html")
@@ -83,13 +74,6 @@ public class GetController {
         return new Cv24ResumeList(resumes);
     }
 
-    @Autowired
-    private Fichier fichier;
-
-    @GetMapping("/testfic")
-    public String afficherContenuFichier() {
-        return fichier.loadFileXML();
-    }
 
    
 }

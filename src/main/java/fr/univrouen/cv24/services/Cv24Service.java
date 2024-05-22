@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.univrouen.cv24.exception.CVNotFoundException;
 import fr.univrouen.cv24.exception.DuplicateCVException;
 import fr.univrouen.cv24.model.Autre;
 import fr.univrouen.cv24.model.CV24;
@@ -40,89 +41,83 @@ public class Cv24Service {
 
 	    @Transactional
 	    public String saveCV(CV24 cv) {
-	        try {
-	            // Vérifiez si un CV similaire existe déjà
-	            if (cv24Repository.existsByIdentiteNomAndIdentitePrenomAndIdentiteMel(
-	                    cv.getIdentite().getNom(), cv.getIdentite().getPrenom(), cv.getIdentite().getMel())) {
-	                throw new DuplicateCVException("Un CV avec la même identité existe déjà.");
-	            }
-
-	            // Sauvegarde de l'identité
-	            identity.saveIdentite(cv.getIdentite());
-
-	            // Sauvegarde de l'objectif
-	            objectifService.saveObjectif(cv.getObjectif());
-
-	            // Sauvegarde des informations professionnelles
-	            Prof prof = cv.getProf();
-	            if (prof != null) {
-	                for (Detail detail : prof.getDetails()) {
-	                    detail.setProf(prof);
-	                }
-	                profService.saveProf(prof);
-	            }
-
-	            // Sauvegarde des compétences
-	            Competences competences = cv.getCompetence();
-	            if (competences != null) {
-	                for (Diplome diplome : competences.getDiplomes()) {
-	                	
-	                	  if (diplome != null) {
-	                          for (Titre titre : diplome.getTitre()) {
-	                              titre.setDiplome(diplome);
-	                           }
-	                      }
-	                	
-	                    diplome.setCompetence(competences);
-	                }
-	                for (Certif certif : competences.getCertifications()) {
-	                    certif.setCompetence(competences);
-	                }
-	                competencesService.saveCompetences(competences);
-	            }
-
-	            // Sauvegarde des informations diverses
-	            Divers divers = cv.getDivers();
-	            if (divers != null) {
-	                for (LV lv : divers.getLv()) {
-	                    lv.setDivers(divers);
-	                }
-	                for (Autre autre : divers.getAutre()) {
-	                    autre.setDivers(divers);
-	                }
-	                divService.saveDivers(divers);
-	            }
-
-	            // Sauvegarde finale du CV
-	            cv24Repository.save(cv);
-	        } catch (DuplicateCVException e) {
-	            System.err.println("Erreur : " + e.getMessage());
-	            return "Une erreur s'est produite lors de la sauvegarde du CV : " + e.getMessage()+"";
-	            // Gérer l'exception pour les CV en double (ex. : retour d'une réponse HTTP appropriée dans un contexte web)
-	        } catch (DataIntegrityViolationException e) {
-	        	
-	            System.err.println("Erreur d'intégrité des données : " + e.getMessage());
-	            return "Erreur d'intégrité des données : " + e.getMessage()+"";
-	            // Gérer l'exception liée à la violation de contraintes d'intégrité des données
-	        } catch (Exception e) {
-	            System.err.println("Une erreur s'est produite lors de la sauvegarde du CV : " + e.getMessage());
-	            // Gérer toute autre exception
-	            return "Une erreur s'est produite lors de la sauvegarde du CV : " + e.getMessage()+"";
+	        // Vérifiez si un CV similaire existe déjà
+	        if (cv24Repository.existsByIdentiteNomAndIdentitePrenomAndIdentiteMel(
+	                cv.getIdentite().getNom(), cv.getIdentite().getPrenom(), cv.getIdentite().getMel())) {
+	            throw new DuplicateCVException("Un CV avec la même identité existe déjà.");
 	        }
-	        return "cv est bien inseré";
-	    }
+
+	        // Sauvegarde de l'identité
+	        identity.saveIdentite(cv.getIdentite());
+
+	        // Sauvegarde de l'objectif
+	        objectifService.saveObjectif(cv.getObjectif());
+
+	        // Sauvegarde des informations professionnelles
+	        Prof prof = cv.getProf();
+	        if (prof != null) {
+	            for (Detail detail : prof.getDetails()) {
+	                detail.setProf(prof);
+	            }
+	            profService.saveProf(prof);
+	        }
+
+	        // Sauvegarde des compétences
+	        Competences competences = cv.getCompetence();
+	        if (competences != null) {
+	            for (Diplome diplome : competences.getDiplomes()) {
+	                if (diplome != null) {
+	                    for (Titre titre : diplome.getTitre()) {
+	                        titre.setDiplome(diplome);
+	                    }
+	                }
+	                diplome.setCompetence(competences);
+	            }
+	            for (Certif certif : competences.getCertifications()) {
+	                certif.setCompetence(competences);
+	            }
+	            competencesService.saveCompetences(competences);
+	        }
+
+	        // Sauvegarde des informations diverses
+	        Divers divers = cv.getDivers();
+	        if (divers != null) {
+	            for (LV lv : divers.getLv()) {
+	                lv.setDivers(divers);
+	            }
+	            for (Autre autre : divers.getAutre()) {
+	                autre.setDivers(divers);
+	            }
+	            divService.saveDivers(divers);
+	        }
+
+	        // Sauvegarde finale du CV
+	        cv24Repository.save(cv);
+	   return "Cv inserer";  }
+	
 	
 
 	    public List<CV24> findAll() {
 	        return cv24Repository.findAll();
-	    }  
-	
-	
+	    }
 
 	    public CV24 getCVById(int id) {
-	        return cv24Repository.findById(id);
+	        Optional<CV24> cvOptional = cv24Repository.findById(id);
+	        if (!cvOptional.isPresent()) {
+	            throw new CVNotFoundException("CV non trouvé avec l'id : " + id);
+	        }
+	        return cvOptional.get();
 	    }
-	    
+
+	    @Transactional
+	    public boolean deleteCVById(int id) {
+	        Optional<CV24> cvOptional = cv24Repository.findById(id);
+	        if (!cvOptional.isPresent()) {
+	            throw new CVNotFoundException("Impossible de supprimer le CV : ID non trouvé.");
+	        }
+	        cv24Repository.delete(cvOptional.get());
+	        return true;
+	    }
 	    
 	    public List<Cv24Resume> getAllCVResumes() {
 	        List<CV24> cvs = cv24Repository.findAll();
@@ -137,14 +132,6 @@ public class Cv24Service {
 	            return resume;
 	        }).collect(Collectors.toList());
 	    }
-	    @Transactional
-	    public boolean deleteCVById(int id) {
-	        CV24 cv = cv24Repository.findById(id);
-	        if (cv!= null) {
-	            cv24Repository.deleteById(id);
-	            return true;
-	        } else {
-	            return false;
-	        }    
-	}
+	 
+	
 }

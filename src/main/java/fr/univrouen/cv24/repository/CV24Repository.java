@@ -11,9 +11,13 @@ import fr.univrouen.cv24.model.CV24;
 public interface CV24Repository extends JpaRepository<CV24, Long> {
 	 boolean existsByIdentiteNomAndIdentitePrenomAndIdentiteMel(String nom, String prenom, String mel);
 
-	CV24 findById(int id);
+	 Optional<CV24> findById(int id);
 
 	void deleteById(int id);
+
+	boolean existsById(int id);
+
+	
 
     
 }
