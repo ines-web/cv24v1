@@ -2,6 +2,7 @@ package fr.univrouen.cv24.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,6 +75,32 @@ public class GetController {
         return new Cv24ResumeList(resumes);
     }
 
+	
+	@GetMapping(value = "/cv24/search", produces = MediaType.APPLICATION_XML_VALUE)
+    @ResponseBody
+    public Cv24ResumeList searchCVs(
+        @RequestParam(value = "date", required = false) String date,
+        @RequestParam(value = "objectif", required = false) String objectif) {
+
+        System.out.println("hey********************************************************************* " + date + objectif);
+
+        List<CV24> cvs = cv24Service.searchCVs(date, objectif);
+        return new Cv24ResumeList(cvs.stream().map(cv -> {
+            Cv24Resume resume = new Cv24Resume();
+            resume.setId(cv.getId());
+            resume.setGenre(cv.getIdentite().getGenre());
+            resume.setNom(cv.getIdentite().getNom());
+            resume.setPrenom(cv.getIdentite().getPrenom());
+            resume.setObjectif(cv.getObjectif());
+
+            // Récupérez le diplôme avec la date spécifiée
+            resume.setDiplome(cv.getCompetence().getDiplomes().stream()
+                .filter(diplome -> date == null || diplome.getDate().equals(date))
+                .findFirst().orElse(null));
+            
+            return resume;
+        }).collect(Collectors.toList()));
+    }
 
    
 }

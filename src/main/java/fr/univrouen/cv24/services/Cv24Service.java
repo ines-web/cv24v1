@@ -132,6 +132,24 @@ public class Cv24Service {
 	            return resume;
 	        }).collect(Collectors.toList());
 	    }
+	    
+	     public List<CV24> searchCVs(String date, String objectif) {
+		        List<CV24> cvs = cv24Repository.findAll();
+
+		        return cvs.stream()
+		            .filter(cv -> {
+		                boolean matches = true;
+		                if (objectif != null && !objectif.isEmpty()) {
+		                    matches = cv.getObjectif().getObjectif().contains(objectif);
+		                }
+		                if (matches && date != null && !date.isEmpty()) {
+		                    matches = cv.getCompetence().getDiplomes().stream()
+		                        .anyMatch(diplome -> date.equals(diplome.getDate())); // Assurez-vous que la méthode getDate() existe et renvoie la date au format String
+		                }
+		                return matches;
+		            })
+		            .collect(Collectors.toList());
+		    }
 	 
 	
 }
