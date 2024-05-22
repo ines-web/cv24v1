@@ -104,20 +104,26 @@
         </td>
     </tr>
     <tr>
-        <th scope="row">/cv24/delete</th>
-        <td data-label="Méthode HTTP">DELETE</td>
+        <th scope="row">/cv24/search</th>
+        <td data-label="Méthode HTTP">GET</td>
         <td data-label="Description">
-            Cette requête supprime le CV dont l’identifiant est &lt;id&gt;. Le format de retour est un flux XML. Si l’opération réussit, les informations suivantes sont retournées :
+            Cette requête recherche la liste des spécifications répondant aux contraintes exprimées dans la requête. Les paramètres de la requête sont :
             <ul>
-                <li><strong>id:</strong> Numéro d’identifiant du CV qui a été supprimé</li>
-                <li><strong>status:</strong> DELETED</li>
+                <li><strong>date :</strong> Liste des spécifications dont la date est identique, ou postérieure à celle indiquée dans la requête.</li>
+                <li><strong>objectif :</strong> Liste des CV dont l'objectif spécifié comprend au moins l'un des mots de la requête.</li>
             </ul>
-            Si l’opération échoue :
+            Le format de retour est un flux XML comprenant la liste des articles répondant aux critères de recherche exprimés. Le format sera semblable à celui utilisé pour présenter la liste des articles (§I.3.1).
+            <br>Si l’opération a réussi, mais que la liste est vide, alors seul le statut sera retourné :
             <ul>
-                <li><strong>status:</strong> ERROR</li>
+                <li><strong>status :</strong> NONE</li>
+            </ul>
+            Si l’opération a échoué (format de contrainte incorrect, etc.), le statut suivant sera retourné :
+            <ul>
+                <li><strong>status :</strong> ERROR</li>
             </ul>
         </td>
     </tr>
+    
     
     </tbody>
 </table>
