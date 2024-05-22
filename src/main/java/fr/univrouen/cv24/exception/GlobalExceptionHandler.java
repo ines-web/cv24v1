@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(CVNotFoundException.class)
     public ResponseEntity<String> handleCVNotFoundException(CVNotFoundException ex) {
-        ErrorResponse error = new ErrorResponse(0, "ERROR : " + ex.getMessage());
+        ErrorResponse error = new ErrorResponse(0, "None ");
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(convertToXml(error));
     }
