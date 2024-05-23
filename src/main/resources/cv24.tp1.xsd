@@ -11,7 +11,7 @@
 
   <xs:simpleType name="String32maj">
     <xs:restriction base="texte">
-      <xs:pattern value="[A-Z\s]{1,32}"/>
+      <xs:pattern value="[\p{Lu}\s'\-]{1,32}"/>
       <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
@@ -20,14 +20,14 @@
   <xs:simpleType name="String32">
 <xs:restriction base="xs:string">
 <xs:maxLength value="32"/>
-<xs:pattern value="[a-zA-Z\s\-']{1,32}"/>
+<xs:pattern value="[\p{L}\s'\-]{1,32}"/>
 </xs:restriction>
 </xs:simpleType>
 
 <xs:simpleType name="String128">
 <xs:restriction base="xs:string" >
 <xs:maxLength value="128"/>
-<xs:pattern value="[a-zA-Z0-9\s\.,:;~@()\-&apos;&amp;#!?$*=]*"/>
+<xs:pattern value="[\p{L}\p{Nd}\s.,:;'@()-=_*~$?!#&amp;]{1,128}"></xs:pattern>
 </xs:restriction>
 </xs:simpleType>
  
@@ -119,7 +119,7 @@
 <xs:complexType name="competencesType">
 		<xs:sequence>
 		<xs:element name="diplôme" type="diplometype" minOccurs="1" maxOccurs="5"> </xs:element>
-		<xs:element name="certif" type="certifType" minOccurs="1" maxOccurs="unbounded"> </xs:element>
+		<xs:element name="certif" type="certifType" minOccurs="0" maxOccurs="unbounded"> </xs:element>
 	</xs:sequence>
 	
 

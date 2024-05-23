@@ -30,11 +30,11 @@ public class Identite implements Serializable {
 
     @Column(name = "tel")
     @XmlElement
-    private String tel;
+    private String tel="";
 
     @Column(name = "mel")
     @XmlElement
-    private String mel;
+    private String mel="";
 
     public Identite(String genre, String nom, String prenom, String tel, String mel) {
         this.genre = genre;

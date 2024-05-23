@@ -25,10 +25,10 @@ public class Objectif implements Serializable {
 
     @Column(name = "objectif", length = 128)
     @XmlElement(name="objectif")
-    private String objectif;
+    private String objectif="";
     
     @XmlAttribute(name = "status")
-    private String status;
+    private String status="";
 
     public Objectif() {
         // Constructeur par défaut pour JPA

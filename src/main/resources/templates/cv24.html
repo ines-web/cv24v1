@@ -11,51 +11,90 @@
 
         <section class="section">
             <h2>Identité</h2>
-            <p><strong>Genre:</strong> <span th:text="${cv24.identite.genre}">M./Mme</span></p>
-            <p><strong>Nom:</strong> <span th:text="${cv24.identite.nom}">Nom</span></p>
-            <p><strong>Prénom:</strong> <span th:text="${cv24.identite.prenom}">Prénom</span></p>
-            <p><strong>Téléphone:</strong> <span th:text="${cv24.identite.tel}">+33 1 23 45 67 89</span></p>
-            <p><strong>Email:</strong> <span th:text="${cv24.identite.mel}">mel@hs.fr</span></p>
+            <p><strong>Genre:</strong> <span th:text="${cv24.identite?.genre}">M./Mme</span></p>
+            <p><strong>Nom:</strong> <span th:text="${cv24.identite?.nom}">Nom</span></p>
+            <p><strong>Prénom:</strong> <span th:text="${cv24.identite?.prenom}">Prénom</span></p>
+            <p><strong>Téléphone:</strong> <span th:text="${cv24.identite?.tel}">+33 1 23 45 67 89</span></p>
+            <p><strong>Email:</strong> <span th:text="${cv24.identite?.mel}">mel@hs.fr</span></p>
         </section>
 
         <section class="section">
             <h2>Objectif</h2>
-            <p><strong>Status:</strong> <span th:text="${cv24.objectif.status}">Stage/Emploi</span></p>
-            <p><strong>Objectif:</strong> <span th:text="${cv24.objectif.objectif}">Description de l'objectif</span></p>
+            <p><strong>Status:</strong> <span th:text="${cv24.objectif?.status}">Stage/Emploi</span></p>
+            <p><strong>Objectif:</strong> <span th:text="${cv24.objectif?.objectif}">Description de l'objectif</span></p>
         </section>
 
         <section class="section">
             <h2>Profession</h2>
-            <div th:each="detail : ${cv24.prof.details}">
-                <p><strong>Date de début:</strong> <span th:text="${detail.datedeb}">2001-01-01</span></p>
-                <p><strong>Date de fin:</strong> <span th:text="${detail.datefin}">2001-01-01</span></p>
-                <p><strong>Titre:</strong> <span th:text="${detail.titre}">Titre du poste</span></p>
+            <div th:if="${cv24.prof != null && !cv24.prof.details.isEmpty()}">
+                <div th:each="detail : ${cv24.prof.details}">
+                    <p><strong>Date de début:</strong> <span th:text="${detail.datedeb}">2001-01-01</span></p>
+                    <p><strong>Date de fin:</strong> <span th:text="${detail.datefin}">2001-01-01</span></p>
+                    <p><strong>Titre:</strong> <span th:text="${detail.titre}">Titre du poste</span></p>
+                </div>
+            </div>
+            <div th:if="${cv24.prof == null || cv24.prof.details.isEmpty()}">
+                <p>Aucune expérience professionnelle.</p>
             </div>
         </section>
 
         <section class="section">
             <h2>Compétences</h2>
-            <div th:each="diplome : ${cv24.getCompetence().getDiplomes()}">
-                <p><strong>Date:</strong> <span th:text="${diplome.date}">2001-01-01</span></p>
-                <p><strong>Institut:</strong> <span th:text="${diplome.institut}">Nom de l'institut</span></p>
-                <p><strong>Titre:</strong> <span th:each="titre :${diplome.getTitre()}"> <span th:text="${titre.getTitre()}"></span> </span></p>
+            <div th:if="${cv24.getCompetence() != null}">
+                <div th:if="${!cv24.getCompetence().getDiplomes().isEmpty()}">
+                    <h3>Diplômes</h3>
+                    <div th:each="diplome : ${cv24.getCompetence().getDiplomes()}">
+                        <p><strong>Date:</strong> <span th:text="${diplome.date}">2001-01-01</span></p>
+                        <p><strong>Institut:</strong> <span th:text="${diplome.institut}">Nom de l'institut</span></p>
+                        <p><strong>Titre :</strong> <span th:each="titre :${diplome.getTitre()}"> <span th:text="${titre.getTitre()}">Titre :</span> </span></p>
+                    </div>
+                </div>
+                <div th:if="${cv24.getCompetence().getDiplomes().isEmpty()}">
+                    <p>Aucun diplôme.</p>
+                </div>
+                <div th:if="${!cv24.getCompetence().getCertifications().isEmpty()}">
+                    <h3>Certifications</h3>
+                    <div th:each="certif : ${cv24.getCompetence().getCertifications()}">
+                        <p><strong>Date de début:</strong> <span th:text="${certif.datedeb}">2001-01-01</span></p>
+                        <p><strong>Date de fin:</strong> <span th:text="${certif.datefin}">2001-01-01</span></p>
+                        <p><strong>Titre:</strong> <span th:text="${certif.titre}">Titre de la certification</span></p>
+                    </div>
+                </div>
+                <div th:if="${cv24.getCompetence().getCertifications().isEmpty()}">
+                    <p>Aucune certification.</p>
+                </div>
             </div>
-            <div th:each="certif : ${cv24.getCompetence().getCertifications()}">
-                <p><strong>Date de début:</strong> <span th:text="${certif.datedeb}">2001-01-01</span></p>
-                <p><strong>Date de fin:</strong> <span th:text="${certif.datefin}">2001-01-01</span></p>
-                <p><strong>Titre:</strong> <span th:text="${certif.titre}">Titre de la certification</span></p>
+            <div th:if="${cv24.getCompetence() == null}">
+                <p>Aucune compétence renseignée.</p>
             </div>
         </section>
 
         <section class="section">
             <h2>Divers</h2>
-            <div th:each="lv : ${cv24.getDivers().getLv}">
-                <p><strong>Langue:</strong> <span th:text="${lv.lang}">Langue</span></p>
-                <p><strong>Certificat:</strong> <span th:text="${lv.cert}">Certificat</span></p>
+            <div th:if="${cv24.getDivers() != null}">
+                <div th:if="${!cv24.getDivers().getLv().isEmpty()}">
+                    <h3>Langues Vivantes</h3>
+                    <div th:each="lv : ${cv24.getDivers().getLv()}">
+                        <p><strong>Langue:</strong> <span th:text="${lv.lang}">Langue</span></p>
+                        <p><strong>Certificat:</strong> <span th:text="${lv.cert}">Certificat</span></p>
+                    </div>
+                </div>
+                <div th:if="${cv24.getDivers().getLv().isEmpty()}">
+                    <p>Aucune langue vivante renseignée.</p>
+                </div>
+                <div th:if="${!cv24.getDivers().getAutre().isEmpty()}">
+                    <h3>Autres</h3>
+                    <div th:each="autre : ${cv24.getDivers().getAutre()}">
+                        <p><strong>Titre:</strong> <span th:text="${autre.titre}">Titre</span></p>
+                        <p><strong>Commentaire:</strong> <span th:text="${autre.comment}">Commentaire</span></p>
+                    </div>
+                </div>
+                <div th:if="${cv24.getDivers().getAutre().isEmpty()}">
+                    <p>Aucun autre renseignement.</p>
+                </div>
             </div>
-            <div th:each="autre : ${cv24.getDivers().getAutre}">
-                <p><strong>Titre:</strong> <span th:text="${autre.titre}">Titre</span></p>
-                <p><strong>Commentaire:</strong> <span th:text="${autre.comment}">Commentaire</span></p>
+            <div th:if="${cv24.getDivers() == null}">
+                <p>Aucun renseignement divers.</p>
             </div>
         </section>
     </div>

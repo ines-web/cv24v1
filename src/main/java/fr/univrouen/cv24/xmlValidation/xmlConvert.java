@@ -26,6 +26,8 @@ public class xmlConvert {
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         StringWriter writer = new StringWriter();
         marshaller.marshal(cv, writer);
-        return writer.toString().replaceAll("ns2:", "cv24:");
+        String Result =writer.toString().replaceAll("ns2:", "cv24:");
+       
+        return  Result.replaceAll("<cv24:cv24 xmlns:ns2=\"http://univ.fr/cv24\">", "<cv24:cv24 xmlns:cv24=\"http://univ.fr/cv24\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://univ.fr/cv24 cv24.tp1.xsd\">");
     }
 }

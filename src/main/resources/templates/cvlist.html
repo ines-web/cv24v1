@@ -58,7 +58,7 @@
                     dataType: "xml", // Ajouté pour recevoir une réponse XML
                     success: function(response) {
                         let status = $(response).find('status').text();
-                        if(status == 'DELETED') {
+                        if(status == 'SUCCESS:Votre CV a été bien supprimé.') {
                             window.location.href = '/cv24/resume';
                         } else {
                             alert('Une erreur s\'est produite lors de la suppression du CV');

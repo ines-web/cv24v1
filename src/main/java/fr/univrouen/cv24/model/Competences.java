@@ -1,6 +1,7 @@
 package fr.univrouen.cv24.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.*;
@@ -23,8 +24,8 @@ public class Competences implements Serializable {
     
 
     @OneToMany(mappedBy = "competences", cascade = CascadeType.ALL, orphanRemoval = true)
-    @XmlElement(name = "certif", required = true)
-    private List<Certif> certifications;
+    @XmlElement(name = "certif")
+    private List<Certif> certifications= new ArrayList<>();
 
     public Competences() {}
 

@@ -7,14 +7,14 @@
         <tel>0987654321</tel>
         <mel>ammira.tirreche@example.com</mel>
     </cv24:identite>
-    <cv24:objectif status="emploi">
-        <objectif>Etudiante en Master de droit international cherchant un stage en cabinet d'avocats</objectif>
+    <cv24:objectif status="stage">
+        <objectif>Etudiante en Master de Génie logiciel cherchant un stage d'été</objectif>
     </cv24:objectif>
     <cv24:prof>
         <detail>
             <datedeb>2021-06-01</datedeb>
             <datefin>2021-08-31</datefin>
-            <titre>Stagiaire en developpement internationales</titre>
+            <titre>Stagiaire en développement internationales</titre>
         </detail>
     </cv24:prof>
     <cv24:competences>

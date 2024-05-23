@@ -29,7 +29,7 @@ public class Certif implements Serializable {
     private String titre;
 
     @ManyToOne
-    @JoinColumn(name = "competence_id", nullable = false)
+    @JoinColumn(name = "competence_id")
     @XmlTransient // Vous pouvez retirer cette annotation si nécessaire
     private Competences competences;
 

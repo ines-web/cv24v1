@@ -26,7 +26,7 @@ public class PostController {
         CV24 cv = transform.ConvertXmlToCv(flux);
         cv24Service.saveCV(cv);
         // Créer un message de succès ou un objet de réponse XML approprié
-        String successMessage = "<Resultat><id>"+cv.getId()+"</id></Resultat><status>SUCCESS</status></Resultat>";
+        String successMessage = "<Resultat><id>"+cv.getId()+"</id><status>SUCCESS</status></Resultat>";
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(successMessage);
     }
 }
